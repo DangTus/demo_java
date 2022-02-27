@@ -34,7 +34,7 @@ public class UserView extends javax.swing.JFrame {
                 return false;
             }
         };
-        userTable.setModel(defaultTableModel);
+        userTable.setModel(defaultTableModel);       
         
         defaultTableModel.addColumn("id");
         defaultTableModel.addColumn("Họ tên");
@@ -68,9 +68,9 @@ public class UserView extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        userTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        userTable = new javax.swing.JTable();
 
         jButton2.setText("jButton2");
 
@@ -79,6 +79,11 @@ public class UserView extends javax.swing.JFrame {
 
         addButton.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         addButton.setText("Thêm mới");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         refreshButton.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         refreshButton.setText("Làm mới");
@@ -88,26 +93,19 @@ public class UserView extends javax.swing.JFrame {
             }
         });
 
-        userTable.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("DANH SÁCH NGƯỜI DÙNG");
+
         userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        userTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        userTable.setPreferredSize(new java.awt.Dimension(960, 64));
-        userTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(userTable);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("DANH SÁCH NGƯỜI DÙNG");
+        jScrollPane2.setViewportView(userTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,7 +118,7 @@ public class UserView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -131,13 +129,13 @@ public class UserView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
                     .addComponent(refreshButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -156,6 +154,12 @@ public class UserView extends javax.swing.JFrame {
             Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_refreshButtonActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+        new UserAdd().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_addButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,7 +207,7 @@ public class UserView extends javax.swing.JFrame {
     private javax.swing.JButton addButton;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton refreshButton;
     private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
