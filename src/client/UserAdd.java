@@ -1,4 +1,3 @@
-
 package client;
 
 import java.sql.SQLException;
@@ -17,7 +16,7 @@ public class UserAdd extends javax.swing.JFrame {
         user = new User();
         userService = new UserService();
     }
-    
+    // Hàm này dùng để back về trang user view
     public void back() throws ClassNotFoundException, SQLException {
         new UserView().setVisible(true);
         this.dispose();
@@ -226,16 +225,16 @@ public class UserAdd extends javax.swing.JFrame {
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
         // TODO add your handling code here:
-        if(nameTextField.getText().equals("")) {
+        if(nameTextField.getText().equals("")) { // Kiểm tra xem có nhập họ tên hay không
             JOptionPane.showMessageDialog(this, "Vui lòng nhập họ tên", "Lỗi rồi bạn ei", JOptionPane.ERROR_MESSAGE);
-        } else {            
+        } else {
+            // set dữ liệu cho user
             user.setName(nameTextField.getText());
             user.setPhoneNumber(sdtTextField.getText());
             user.setUserName(userNameTextField.getText());
             user.setPassword(String.valueOf(passwordTextField.getPassword()));
             user.setFavorite(favoriteTextField.getText());
-            user.setAbout(aboutTextArea.getText());
-            
+            user.setAbout(aboutTextArea.getText());            
             String role = "User";
             if(adminButtonRadio.isSelected()) {
                 role = "Admin";
@@ -243,7 +242,7 @@ public class UserAdd extends javax.swing.JFrame {
             user.setRole(role);
             
             try {
-                if(userService.addUser(user) == 1) {
+                if(userService.addUser(user) == 1) { // Gọi hàm add bên service
                     JOptionPane.showMessageDialog(this, "Thêm thành công", "Thông báo", JOptionPane.CLOSED_OPTION);
                     back();
                 } else {

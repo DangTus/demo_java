@@ -17,6 +17,10 @@ public class UserService {
     }
     
     public int addUser(User user) throws ClassNotFoundException, SQLException{
-        return userDao.addUsers(user);
+        return userDao.addUser(user);
+    }
+    
+    public int deleteUser(int id) throws SQLException {
+        return userDao.deleteUser(id);
     }
 }

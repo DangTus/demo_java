@@ -4,8 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/TU/HOC%20TAP/221/th_jv_nc/DemoJavaBanHang/src/client/UserAdd.java</file>
-            <file>file:/D:/TU/HOC%20TAP/221/th_jv_nc/DemoJavaBanHang/src/sever/UserDao.java</file>
+            <file>file:/D:/TU/HOC%20TAP/221/th_jv_nc/DemoJavaBanHang/src/sever/UserService.java</file>
+            <file>file:/D:/TU/HOC%20TAP/221/th_jv_nc/DemoJavaBanHang/src/dao/UserDao.java</file>
             <file>file:/D:/TU/HOC%20TAP/221/th_jv_nc/DemoJavaBanHang/src/client/UserView.java</file>
+            <file>file:/D:/TU/HOC%20TAP/221/th_jv_nc/DemoJavaBanHang/src/model/User.java</file>
         </group>
     </open-files>
 </project-private>

@@ -37,7 +37,7 @@ public class UserDao {
         return users;
     }
     
-    public int addUsers(User user) throws ClassNotFoundException, SQLException{        
+    public int addUser(User user) throws ClassNotFoundException, SQLException{        
         Connection con = JDBCConnection.getJDBCConnection();
         
         String sql = "INSERT INTO USER(name, phoneNumber, userName, password, role, favorite, about)"
@@ -52,6 +52,20 @@ public class UserDao {
         preparedStatement.setString(5, user.getRole());
         preparedStatement.setString(6, user.getFavorite());
         preparedStatement.setString(7, user.getAbout());
+        
+        int rs = preparedStatement.executeUpdate();
+        
+        return rs;
+    }
+    
+    public int deleteUser(int id) throws SQLException {
+        Connection con = JDBCConnection.getJDBCConnection();
+        
+        String sql = "DELETE FROM USER WHERE id = ?";
+        
+        PreparedStatement preparedStatement = con.prepareStatement(sql);
+        
+        preparedStatement.setInt(1, id);
         
         int rs = preparedStatement.executeUpdate();
         

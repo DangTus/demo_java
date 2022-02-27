@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package client;
 
 import java.sql.SQLException;
@@ -13,16 +9,10 @@ import javax.swing.table.DefaultTableModel;
 import model.User;
 import sever.UserService;
 
-/**
- *
- * @author DELL
- */
 public class UserView extends javax.swing.JFrame {
     UserService userService;
     DefaultTableModel defaultTableModel;
-    /**
-     * Creates new form UserView
-     */
+
     public UserView() throws ClassNotFoundException, SQLException {
         initComponents();
         
@@ -30,12 +20,12 @@ public class UserView extends javax.swing.JFrame {
         
         defaultTableModel = new DefaultTableModel(){
             @Override
-            public boolean isCellEditable(int row, int column) {
+            public boolean isCellEditable(int row, int column) { //Cái này là để k cho sửa trực tiếp trên bảng
                 return false;
             }
         };
-        userTable.setModel(defaultTableModel);       
-        
+        userTable.setModel(defaultTableModel);   
+        // Tạo hàng tiêu đề
         defaultTableModel.addColumn("id");
         defaultTableModel.addColumn("Họ tên");
         defaultTableModel.addColumn("SDT");
@@ -45,13 +35,17 @@ public class UserView extends javax.swing.JFrame {
         defaultTableModel.addColumn("Sở thích");
         defaultTableModel.addColumn("Giới thiệu");
         
-        if(userService.getAllUsers().size() == 0) {
+        showTableData(); // Đổ dữ liệu vào bảng
+    }
+    // Hàm này dùng để đổ dữ liệu vào bảng
+    private void showTableData() throws ClassNotFoundException, SQLException {
+        if(userService.getAllUsers().size() == 0) { // Kiểm tra xem có dữ liệu không
             defaultTableModel.addRow(new Object[]{"Không có người dùng"});
         } else {
             setTableData(userService.getAllUsers());
         }
     }
-    
+    // Hàm này dùng để đổ dữ liệu từng dòng
     private void setTableData(List<User> users) {
         for(User user : users) {
             defaultTableModel.addRow(new Object[]{user.getId(), user.getName(), user.getPhoneNumber()
@@ -75,6 +69,8 @@ public class UserView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
+        updateButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
 
@@ -111,6 +107,22 @@ public class UserView extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(userTable);
 
+        updateButton.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        updateButton.setText("Cập nhật");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
+
+        deleteButton.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        deleteButton.setText("Xóa");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,7 +137,11 @@ public class UserView extends javax.swing.JFrame {
                     .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addButton)
+                        .addGap(100, 100, 100)
+                        .addComponent(updateButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(deleteButton)
+                        .addGap(125, 125, 125)
                         .addComponent(refreshButton)))
                 .addContainerGap())
         );
@@ -137,7 +153,9 @@ public class UserView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
-                    .addComponent(refreshButton))
+                    .addComponent(refreshButton)
+                    .addComponent(updateButton)
+                    .addComponent(deleteButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -148,22 +166,54 @@ public class UserView extends javax.swing.JFrame {
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         // TODO add your handling code here:
-        defaultTableModel.setRowCount(0);
+        defaultTableModel.setRowCount(0); // reset dữ liệu về 0
         try {
-            setTableData(userService.getAllUsers());
-            JOptionPane.showMessageDialog(this, "Làm mới thành công", "Thông báo", JOptionPane.CLOSED_OPTION);
+            showTableData(); // Gọi hàm đổ dữ liệu vào bảng
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        JOptionPane.showMessageDialog(this, "Làm mới thành công", "Thông báo", JOptionPane.CLOSED_OPTION);
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
-        new UserAdd().setVisible(true);
-        this.dispose();
+        new UserAdd().setVisible(true); // Chuyển qua trang add
+        this.dispose(); // Đóng trang hiện tại
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        // TODO add your handling code here:        
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        // TODO add your handling code here:
+        int row = userTable.getSelectedRow(); //Xác định hàng mà mình đã chọn
+        if(row == -1) {
+            JOptionPane.showMessageDialog(this, "Chọn user cần xóa trước đi bạn ei", "Lỗi rồi bạn ei", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa không?"); //Xác nhận xóa
+            
+            if(confirm == JOptionPane.YES_OPTION) {
+                int id = Integer.valueOf(String.valueOf(userTable.getValueAt(row, 0)));
+                
+                try {
+                    if(userService.deleteUser(id) == 1) { //nếu hàm bên service trả về 1 thì là xóa thành công
+                        JOptionPane.showMessageDialog(this, "Xóa thành công", "Thông báo", JOptionPane.CLOSED_OPTION);                        
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Xóa không thành công", "Thông báo", JOptionPane.CLOSED_OPTION);
+                    }
+                    defaultTableModel.setRowCount(0); // reset dữ liệu về 0
+                    showTableData(); // Gọi hàm đổ dữ liệu vào bảng
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,10 +259,12 @@ public class UserView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton refreshButton;
+    private javax.swing.JButton updateButton;
     private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
 }
