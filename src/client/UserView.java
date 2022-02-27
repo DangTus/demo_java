@@ -10,15 +10,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import sever.User;
-import sever.UserDao;
+import model.User;
+import sever.UserService;
 
 /**
  *
  * @author DELL
  */
 public class UserView extends javax.swing.JFrame {
-    UserDao userDao;
+    UserService userService;
     DefaultTableModel defaultTableModel;
     /**
      * Creates new form UserView
@@ -26,7 +26,7 @@ public class UserView extends javax.swing.JFrame {
     public UserView() throws ClassNotFoundException, SQLException {
         initComponents();
         
-        userDao = new UserDao();
+        userService = new UserService();
         
         defaultTableModel = new DefaultTableModel(){
             @Override
@@ -45,7 +45,11 @@ public class UserView extends javax.swing.JFrame {
         defaultTableModel.addColumn("Sở thích");
         defaultTableModel.addColumn("Giới thiệu");
         
-        setTableData(userDao.getAllUsers());
+        if(userService.getAllUsers().size() == 0) {
+            defaultTableModel.addRow(new Object[]{"Không có người dùng"});
+        } else {
+            setTableData(userService.getAllUsers());
+        }
     }
     
     private void setTableData(List<User> users) {
@@ -146,7 +150,7 @@ public class UserView extends javax.swing.JFrame {
         // TODO add your handling code here:
         defaultTableModel.setRowCount(0);
         try {
-            setTableData(userDao.getAllUsers());
+            setTableData(userService.getAllUsers());
             JOptionPane.showMessageDialog(this, "Làm mới thành công", "Thông báo", JOptionPane.CLOSED_OPTION);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);

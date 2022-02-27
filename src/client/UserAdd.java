@@ -1,30 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package client;
 
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import sever.User;
-import sever.UserDao;
+import model.User;
+import sever.UserService;
 
-/**
- *
- * @author DELL
- */
 public class UserAdd extends javax.swing.JFrame {
     User user;
-    UserDao userDao;
-    /**
-     * Creates new form UserAdd
-     */
+    UserService userService;
+
     public UserAdd() {
         initComponents();
         user = new User();
-        userDao = new UserDao();
+        userService = new UserService();
     }
     
     public void back() throws ClassNotFoundException, SQLException {
@@ -237,7 +228,7 @@ public class UserAdd extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(nameTextField.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập họ tên", "Lỗi rồi bạn ei", JOptionPane.ERROR_MESSAGE);
-        } else {
+        } else {            
             user.setName(nameTextField.getText());
             user.setPhoneNumber(sdtTextField.getText());
             user.setUserName(userNameTextField.getText());
@@ -252,7 +243,7 @@ public class UserAdd extends javax.swing.JFrame {
             user.setRole(role);
             
             try {
-                if(userDao.addUsers(user) == 1) {
+                if(userService.addUser(user) == 1) {
                     JOptionPane.showMessageDialog(this, "Thêm thành công", "Thông báo", JOptionPane.CLOSED_OPTION);
                     back();
                 } else {

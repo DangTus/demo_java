@@ -1,4 +1,4 @@
-package sever;
+package model;
 
 public class User {
     private int id;

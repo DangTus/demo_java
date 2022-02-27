@@ -1,5 +1,6 @@
-package sever;
+package dao;
 
+import model.User;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
