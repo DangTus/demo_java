@@ -1,4 +1,4 @@
-package DemoJavaBanHang;
+package sever;
 
 import java.sql.SQLException;
 import java.sql.Connection;
@@ -34,5 +34,26 @@ public class UserDao {
             users.add(user);
         }
         return users;
+    }
+    
+    public int addUsers(User user) throws ClassNotFoundException, SQLException{        
+        Connection con = JDBCConnection.getJDBCConnection();
+        
+        String sql = "INSERT INTO USER(name, phoneNumber, userName, password, role, favorite, about)"
+                    + "values(?, ?, ?, ?, ?, ?, ?)";
+        
+        PreparedStatement preparedStatement = con.prepareStatement(sql);
+        
+        preparedStatement.setString(1, user.getName());
+        preparedStatement.setString(2, user.getPhoneNumber());
+        preparedStatement.setString(3, user.getUserName());
+        preparedStatement.setString(4, user.getPassword());
+        preparedStatement.setString(5, user.getRole());
+        preparedStatement.setString(6, user.getFavorite());
+        preparedStatement.setString(7, user.getAbout());
+        
+        int rs = preparedStatement.executeUpdate();
+        
+        return rs;
     }
 }

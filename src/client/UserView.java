@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package DemoJavaBanHang;
+package client;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -10,18 +10,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import sever.User;
+import sever.UserDao;
 
 /**
  *
  * @author DELL
  */
-public class UserClient extends javax.swing.JFrame {
+public class UserView extends javax.swing.JFrame {
     UserDao userDao;
     DefaultTableModel defaultTableModel;
     /**
-     * Creates new form UserClient
+     * Creates new form UserView
      */
-    public UserClient() throws ClassNotFoundException, SQLException {
+    public UserView() throws ClassNotFoundException, SQLException {
         initComponents();
         
         userDao = new UserDao();
@@ -63,18 +65,22 @@ public class UserClient extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton2 = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+
+        jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Người dùng");
-        setMinimumSize(new java.awt.Dimension(960, 800));
-        setPreferredSize(new java.awt.Dimension(960, 800));
 
+        addButton.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         addButton.setText("Thêm mới");
 
+        refreshButton.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         refreshButton.setText("Làm mới");
         refreshButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,6 +88,7 @@ public class UserClient extends javax.swing.JFrame {
             }
         });
 
+        userTable.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -94,17 +101,26 @@ public class UserClient extends javax.swing.JFrame {
             }
         ));
         userTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        userTable.setPreferredSize(new java.awt.Dimension(960, 64));
         userTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(userTable);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("DANH SÁCH NGƯỜI DÙNG");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(179, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(156, 156, 156))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -113,14 +129,16 @@ public class UserClient extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
                     .addComponent(refreshButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -133,9 +151,9 @@ public class UserClient extends javax.swing.JFrame {
             setTableData(userDao.getAllUsers());
             JOptionPane.showMessageDialog(this, "Làm mới thành công", "Thông báo", JOptionPane.CLOSED_OPTION);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UserClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(UserClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_refreshButtonActionPerformed
 
@@ -156,25 +174,26 @@ public class UserClient extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
-                    new UserClient().setVisible(true);
+                    new UserView().setVisible(true);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(UserClient.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex) {
-                    Logger.getLogger(UserClient.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -182,6 +201,8 @@ public class UserClient extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton refreshButton;
     private javax.swing.JTable userTable;

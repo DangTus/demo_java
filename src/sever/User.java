@@ -1,4 +1,4 @@
-package DemoJavaBanHang;
+package sever;
 
 public class User {
     private int id;
