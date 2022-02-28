@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package client;
 
 import java.sql.SQLException;
@@ -7,15 +11,35 @@ import javax.swing.JOptionPane;
 import model.User;
 import sever.UserService;
 
-public class UserAdd extends javax.swing.JFrame {
-    User user;
+/**
+ *
+ * @author DELL
+ */
+public class UserUpdate extends javax.swing.JFrame {
+    User user, userU;
     UserService userService;
+    int id;
 
-    public UserAdd() {
+    public UserUpdate(int id) throws SQLException {        
         initComponents();
-        user = new User();
+        this.id = id;
+        
         userService = new UserService();
-    }
+        user = userService.getUserById(id);
+        
+        idTextField.setText(String.valueOf(id));
+        nameTextField.setText(user.getName());
+        sdtTextField.setText(user.getPhoneNumber());
+        userNameTextField.setText(user.getUserName());
+        passwordTextField.setText(user.getPassword());
+        favoriteTextField.setText(user.getFavorite());
+        aboutTextArea.setText(user.getAbout());
+        
+        String role = user.getRole();
+        if(role.equals("Admin")) {
+            adminButtonRadio.setSelected(true);
+        }
+    }    
     // Hàm này dùng để back về trang user view
     public void back() throws ClassNotFoundException, SQLException {
         new UserView().setVisible(true);
@@ -32,28 +56,32 @@ public class UserAdd extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        backButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        nameTextField = new javax.swing.JTextField();
-        sdtTextField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        userNameTextField = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        passwordTextField = new javax.swing.JPasswordField();
         favoriteTextField = new javax.swing.JTextField();
+        backButton = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         adminButtonRadio = new javax.swing.JRadioButton();
+        nameTextField = new javax.swing.JTextField();
         userButtonRadio = new javax.swing.JRadioButton();
+        sdtTextField = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         aboutTextArea = new javax.swing.JTextArea();
-        createButton = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        userNameTextField = new javax.swing.JTextField();
+        updateButton = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        passwordTextField = new javax.swing.JPasswordField();
+        idTextField = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Người dùng");
+
+        favoriteTextField.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        favoriteTextField.setMargin(new java.awt.Insets(2, 5, 2, 5));
 
         backButton.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         backButton.setText("Trở lại");
@@ -63,21 +91,44 @@ public class UserAdd extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel9.setText("Sở thích");
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("THÊM NGƯỜI DÙNG MỚI");
+        jLabel1.setText("SỬA THÔNG TIN NGƯỜI DÙNG");
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel10.setText("Vai trò");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel2.setText("Họ tên");
 
+        buttonGroup1.add(adminButtonRadio);
+        adminButtonRadio.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        adminButtonRadio.setText("Admin");
+
         nameTextField.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         nameTextField.setMargin(new java.awt.Insets(2, 5, 2, 5));
+
+        buttonGroup1.add(userButtonRadio);
+        userButtonRadio.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        userButtonRadio.setSelected(true);
+        userButtonRadio.setText("User");
 
         sdtTextField.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         sdtTextField.setMargin(new java.awt.Insets(2, 5, 2, 5));
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel11.setText("Giới thiệu");
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel3.setText("SDT");
+
+        aboutTextArea.setColumns(20);
+        aboutTextArea.setRows(5);
+        aboutTextArea.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        jScrollPane1.setViewportView(aboutTextArea);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel7.setText("Username");
@@ -85,89 +136,72 @@ public class UserAdd extends javax.swing.JFrame {
         userNameTextField.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         userNameTextField.setMargin(new java.awt.Insets(2, 5, 2, 5));
 
+        updateButton.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        updateButton.setText("Sửa");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
+
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel8.setText("Password");
 
         passwordTextField.setMargin(new java.awt.Insets(2, 5, 2, 5));
 
-        favoriteTextField.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        favoriteTextField.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        idTextField.setEditable(false);
+        idTextField.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        idTextField.setBorder(null);
+        idTextField.setEnabled(false);
+        idTextField.setMargin(new java.awt.Insets(2, 5, 2, 5));
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel9.setText("Sở thích");
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel10.setText("Vai trò");
-
-        buttonGroup1.add(adminButtonRadio);
-        adminButtonRadio.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        adminButtonRadio.setText("Admin");
-
-        buttonGroup1.add(userButtonRadio);
-        userButtonRadio.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        userButtonRadio.setSelected(true);
-        userButtonRadio.setText("User");
-
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel11.setText("Giới thiệu");
-
-        aboutTextArea.setColumns(20);
-        aboutTextArea.setRows(5);
-        aboutTextArea.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        jScrollPane1.setViewportView(aboutTextArea);
-
-        createButton.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        createButton.setText("Tạo");
-        createButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createButtonActionPerformed(evt);
-            }
-        });
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel4.setText("Id");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(15, 15, 15)
-                                        .addComponent(adminButtonRadio)
-                                        .addGap(35, 35, 35)
-                                        .addComponent(userButtonRadio))
-                                    .addComponent(userNameTextField)
-                                    .addComponent(favoriteTextField)
-                                    .addComponent(passwordTextField)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)))))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(44, 44, 44)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(sdtTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(nameTextField))))
+                                .addGap(15, 15, 15)
+                                .addComponent(adminButtonRadio)
+                                .addGap(35, 35, 35)
+                                .addComponent(userButtonRadio))
+                            .addComponent(userNameTextField)
+                            .addComponent(favoriteTextField)
+                            .addComponent(passwordTextField)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addComponent(createButton)))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sdtTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(178, 178, 178)
+                        .addComponent(updateButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,10 +210,14 @@ public class UserAdd extends javax.swing.JFrame {
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(idTextField)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(nameTextField)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(sdtTextField)
@@ -206,7 +244,7 @@ public class UserAdd extends javax.swing.JFrame {
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addComponent(createButton)
+                .addComponent(updateButton)
                 .addContainerGap())
         );
 
@@ -217,35 +255,37 @@ public class UserAdd extends javax.swing.JFrame {
         try {
             back();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UserAdd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserUpdate.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(UserAdd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserUpdate.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
         if(nameTextField.getText().equals("")) { // Kiểm tra xem có nhập họ tên hay không
             JOptionPane.showMessageDialog(this, "Vui lòng nhập họ tên", "Lỗi rồi bạn ei", JOptionPane.ERROR_MESSAGE);
         } else {
             // set dữ liệu cho user
-            user.setName(nameTextField.getText());
-            user.setPhoneNumber(sdtTextField.getText());
-            user.setUserName(userNameTextField.getText());
-            user.setPassword(String.valueOf(passwordTextField.getPassword()));
-            user.setFavorite(favoriteTextField.getText());
-            user.setAbout(aboutTextArea.getText());            
+            userU = new User();
+            userU.setId(id);
+            userU.setName(nameTextField.getText());
+            userU.setPhoneNumber(sdtTextField.getText());
+            userU.setUserName(userNameTextField.getText());
+            userU.setPassword(String.valueOf(passwordTextField.getPassword()));
+            userU.setFavorite(favoriteTextField.getText());
+            userU.setAbout(aboutTextArea.getText());
             String role = "User";
             if(adminButtonRadio.isSelected()) {
                 role = "Admin";
             }
-            user.setRole(role);
-            
+            userU.setRole(role);
+
             try {
-                if(userService.addUser(user) == 1) { // Gọi hàm add bên service
-                    JOptionPane.showMessageDialog(this, "Thêm thành công", "Thông báo", JOptionPane.CLOSED_OPTION);                    
+                if(userService.updateUser(userU) == 1) { // Gọi hàm update bên service
+                    JOptionPane.showMessageDialog(this, "Sửa thông tin thành công", "Thông báo", JOptionPane.CLOSED_OPTION);                    
                 } else {
-                    JOptionPane.showMessageDialog(this, "Thêm thất bạt", "Thông báo", JOptionPane.CLOSED_OPTION);
+                    JOptionPane.showMessageDialog(this, "Sửa thông tin thất bại", "Thông báo", JOptionPane.CLOSED_OPTION);
                 }
                 back();
             } catch (ClassNotFoundException ex) {
@@ -254,24 +294,25 @@ public class UserAdd extends javax.swing.JFrame {
                 Logger.getLogger(UserAdd.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }//GEN-LAST:event_createButtonActionPerformed
+    }//GEN-LAST:event_updateButtonActionPerformed
 
     /**
      * @param args the command line arguments
-     */
+     */   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea aboutTextArea;
     private javax.swing.JRadioButton adminButtonRadio;
     private javax.swing.JButton backButton;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton createButton;
     private javax.swing.JTextField favoriteTextField;
+    private javax.swing.JTextField idTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -279,6 +320,7 @@ public class UserAdd extends javax.swing.JFrame {
     private javax.swing.JTextField nameTextField;
     private javax.swing.JPasswordField passwordTextField;
     private javax.swing.JTextField sdtTextField;
+    private javax.swing.JButton updateButton;
     private javax.swing.JRadioButton userButtonRadio;
     private javax.swing.JTextField userNameTextField;
     // End of variables declaration//GEN-END:variables

@@ -184,7 +184,20 @@ public class UserView extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:        
+        // TODO add your handling code here:
+        int row = userTable.getSelectedRow(); //Xác định hàng mà mình đã chọn
+        if(row == -1) {
+            JOptionPane.showMessageDialog(this, "Chọn user cần sửa trước đi bạn ei", "Lỗi rồi bạn ei", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int id = Integer.valueOf(String.valueOf(userTable.getValueAt(row, 0)));
+            
+            try {
+                new UserUpdate(id).setVisible(true); // Chuyển qua trang update
+                this.dispose(); // Đóng trang hiện tại
+            } catch (SQLException ex) {
+                Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
+            }            
+        }
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed

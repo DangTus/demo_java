@@ -16,11 +16,19 @@ public class UserService {
         return userDao.getAllUsers();
     }
     
+    public User getUserById(int id) throws SQLException {
+        return userDao.getUserById(id);
+    }
+    
     public int addUser(User user) throws ClassNotFoundException, SQLException{
         return userDao.addUser(user);
     }
     
     public int deleteUser(int id) throws SQLException {
         return userDao.deleteUser(id);
+    }
+    
+    public int updateUser(User user) throws SQLException {
+        return userDao.updateUser(user);
     }
 }
