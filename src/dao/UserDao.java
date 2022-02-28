@@ -34,6 +34,9 @@ public class UserDao {
             
             users.add(user);
         }
+        
+        con.close();
+        
         return users;
     }
     
@@ -60,6 +63,8 @@ public class UserDao {
             user.setAbout(rs.getString("about")); 
         }
         
+        con.close();
+        
         return user;
     }
     
@@ -81,6 +86,8 @@ public class UserDao {
         
         int rs = preparedStatement.executeUpdate();
         
+        con.close();
+        
         return rs;
     }
     
@@ -94,6 +101,8 @@ public class UserDao {
         preparedStatement.setInt(1, id);
         
         int rs = preparedStatement.executeUpdate();
+        
+        con.close();
         
         return rs;
     }
@@ -117,6 +126,8 @@ public class UserDao {
         preparedStatement.setInt(8, user.getId());
         
         int rs = preparedStatement.executeUpdate();
+        
+        con.close();
         
         return rs;
     }
